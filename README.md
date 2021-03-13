@@ -278,13 +278,13 @@ client.getSkyBlockBazaar
 Sends a request to Mojang to get the Username and or UUID.
 
 ```js
-Hypixel.convertUser("eea2d4fd-a8b8-413b-9439-f06faaf7e109")
-    .then(console.log); // caykie
+const log = console.log;
+
+log(Hypixel.convertUser("eea2d4fd-a8b8-413b-9439-f06faaf7e109"))// caykie
 
 // If you want to force something to be a UUID or Username do;
 
-Hypixel.convertUser("eea2d4fd-a8b8-413b-9439-f06faaf7e109", "uuid")
-    .then(console.log); // eea2d4fd-a8b8-413b-9439-f06faaf7e109
+log(Hypixel.convertUser("eea2d4fd-a8b8-413b-9439-f06faaf7e109", "uuid")) // eea2d4fd-a8b8-413b-9439-f06faaf7e109
 ```
 
 #### Added Dashes to UUID:
@@ -292,8 +292,9 @@ Hypixel.convertUser("eea2d4fd-a8b8-413b-9439-f06faaf7e109", "uuid")
 Does not send any requests and instantly adds dashes to a UUID if not done already.
 
 ```js
-Hypixel.fixUUID("eea2d4fda8b8413b9439f06faaf7e109")
-    .then(console.log); // eea2d4fd-a8b8-413b-9439-f06faaf7e109
+const log = console.log;
+
+log(Hypixel.fixUUID("eea2d4fda8b8413b9439f06faaf7e109")) // eea2d4fd-a8b8-413b-9439-f06faaf7e109
 ```
 
 #### Get Method of Converting to Name or UUID:
@@ -301,12 +302,9 @@ Hypixel.fixUUID("eea2d4fda8b8413b9439f06faaf7e109")
 This will respond with either `uuid` or `name`.
 
 ```js
-Hypixel.getMethod("eea2d4fda8b8413b9439f06faaf7e109")
-    .then(console.log); // uuid
+const log = console.log;
 
-Hypixel.getMethod("eea2d4fd-a8b8-413b-9439-f06faaf7e109")
-    .then(console.log); // uuid
-
-Hypixel.getMethod("caykie")
-    .then(console.log); // name
+log(Hypixel.getMethod("eea2d4fda8b8413b9439f06faaf7e109")) // uuid
+log(Hypixel.getMethod("eea2d4fd-a8b8-413b-9439-f06faaf7e109")) // uuid
+log(Hypixel.getMethod("caykie")) // name
 ```

@@ -4,7 +4,7 @@ const getMethod = require('../methods/getMethod');
 /**
 * Converts a player's username or UUID to the opposite or what is specified.
 * @param {string} User - Provide a Username or UUID with or without dashes.
-* @param {string} Convert - Provide either "username". or "uuid" to convert to.
+* @param {string} [Convert] - Provide either "username". or "uuid" to convert to.
 */
 
 module.exports = async(User, Convert) => {
