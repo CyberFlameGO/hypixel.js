@@ -14,7 +14,7 @@
   "author": "CactiveNetwork",
   "license": "SEE LICENCE IN LICENCE.md",
   "dependencies": {
-    "minecraft-player": "^1.0.1",
+    "minecraft-player": "^1.0.2",
     "node-fetch": "^2.6.1"
   },
   "devDependencies": {},
