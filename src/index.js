@@ -23,7 +23,7 @@ class Client {
     /**
     * Gets the data of a player with no method required.
     * @param {string} user - Either a username or UUID with or without dashes.
-    * @param {string} method - Optional field for either Name or UUID.
+    * @param {string} [method] - Optional field for either Name or UUID.
     */
 
     async getPlayer(user, method) {
