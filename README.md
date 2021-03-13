@@ -1,8 +1,8 @@
-# hypixel.js
+# hypixel-javascript
 
 ## About:
 
-hypixel.js is a new and powerful Hypixel [Node.js](https://nodejs.org/) module to interact with [Hypixel](https://hypixel.net).
+hypixel-javascript is a new and powerful Hypixel [Node.js](https://nodejs.org/) module to interact with [Hypixel](https://hypixel.net).
 
 - 100% coverage of the Hypixel API.
 - Adapt inputs and methods and converts whenever possible.
@@ -10,16 +10,16 @@ hypixel.js is a new and powerful Hypixel [Node.js](https://nodejs.org/) module t
 
 ## Support & Bug Reporting:
 
-hypixel.js is a  new module created by CactiveNetwork, you can get support on your code, report any issues and more by joining the discord at  [discord.gg/NeqVuSy](https://discord.gg/NeqVuSy). 
+hypixel-javascript is a  new module created by CactiveNetwork, you can get support on your code, report any issues and more by joining the discord at  [discord.gg/NeqVuSy](https://discord.gg/NeqVuSy). 
 
 ## Installation & Usage:
 
-In your project run `npm install hypixel.js`.
+In your project run `npm install hypixel-javascript`.
 
 Next enter the following in your main file (`index.js` by default).
 
 ```js
-const Hypixel = require('hypixel.js');
+const Hypixel = require('hypixel-javascript');
 const client = new Hypixel.Client("YOUR_API_KEY");
 ```
 
@@ -28,7 +28,7 @@ You need a Hypixel API key in order to use this library, join [mc.hypixel.net](h
 ## Example Usage:
 
 ```js
-const Hypixel = require('hypixel.js');
+const Hypixel = require('hypixel-javascript');
 const client = new Hypixel.Client("YOUR_API_KEY"); // API Key
 
 client.getPlayer('caykie') // Get player automatically
