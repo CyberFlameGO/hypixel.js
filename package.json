@@ -1,0 +1,20 @@
+{
+  "name": "hypixel.js",
+  "version": "1.0.0",
+  "description": "A good Hypixel API wrapper with many different features.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node example.js"
+  },
+  "keywords": [
+    "hypixel",
+    "minecraft",
+    "api"
+  ],
+  "author": "CactiveNetwork",
+  "license": "SEE LICENCE IN LICENCE.md",
+  "dependencies": {
+    "minecraft-player": "^1.0.1",
+    "node-fetch": "^2.6.1"
+  }
+}
