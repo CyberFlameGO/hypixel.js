@@ -1,6 +1,6 @@
 {
   "name": "hypixel-javascript",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A good Hypixel API wrapper with many different features.",
   "main": "src/index.js",
   "scripts": {
@@ -14,10 +14,8 @@
   "author": "CactiveNetwork",
   "license": "SEE LICENCE IN LICENCE.md",
   "dependencies": {
-    "minecraft-player": "^1.0.1",
-    "node-fetch": "^2.6.1"
+    "phin": "^3.5.1"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/caykey/hypixel.js.git"

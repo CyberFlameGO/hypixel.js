@@ -7,6 +7,7 @@ hypixel-javascript is a new and powerful Hypixel [Node.js](https://nodejs.org/) 
 - 100% coverage of the Hypixel API.
 - Adapt inputs and methods and converts whenever possible.
 - Helpful addons that reduce your workload.
+- Ultra lightweight using minimal dependencies.
 
 ## Support & Bug Reporting:
 
@@ -37,7 +38,7 @@ client.getPlayer('caykie') // Get player automatically
 // or you can do;
 
 (async () => {
-    const data = await client.getPlayer('caykie', 'username');
+    const data = await client.getPlayer('caykie');
     console.log(data.player);
 })();
 ```
@@ -47,13 +48,27 @@ client.getPlayer('caykie') // Get player automatically
 
 #### Fetch Player Data:
 
-You can either put in a **username** or **uuid** with or without dashes without any method without losing any performance from additional fetches. However, you can still request with the 'username' or 'uuid' method.
+For this method, you can specify a username or UUID as the username will automatically convert to UUID, however being slightly slower. Different methods could be chosen, due to a change by Hypixel they have substantially limited the previous way of getting data through username directly.
 
 ```js
+// Slightly slower
 client.getPlayer('caykie')
     .then(console.log);
 
-client.getPlayer('eea2d4fd-a8b8-413b-9439-f06faaf7e109', 'uuid')
+// Fastest way
+client.getPlayer('eea2d4fd-a8b8-413b-9439-f06faaf7e109')
+    .then(console.log);
+```
+
+#### Legacy Player Data:
+
+This is strongly not recommended as you will most likely need to cache data if you are fetching based on the username of the player. We strongly recommend using the data fetch above.
+
+```js
+client.legacyGetPlayer('caykie')
+    .then(console.log);
+
+client.legacyGetPlayer('eea2d4fd-a8b8-413b-9439-f06faaf7e109', 'uuid')
     .then(console.log);
 ```
 
@@ -280,11 +295,11 @@ Sends a request to Mojang to get the Username and or UUID.
 ```js
 const log = console.log;
 
-log(Hypixel.convertUser("eea2d4fd-a8b8-413b-9439-f06faaf7e109"))// caykie
+log(Hypixel.convertUser("eea2d4fd-a8b8-413b-9439-f06faaf7e109")); // caykie
 
 // If you want to force something to be a UUID or Username do;
 
-log(Hypixel.convertUser("eea2d4fd-a8b8-413b-9439-f06faaf7e109", "uuid")) // eea2d4fd-a8b8-413b-9439-f06faaf7e109
+log(Hypixel.convertUser("eea2d4fd-a8b8-413b-9439-f06faaf7e109", "uuid")); // eea2d4fd-a8b8-413b-9439-f06faaf7e109
 ```
 
 #### Added Dashes to UUID:
@@ -294,7 +309,7 @@ Does not send any requests and instantly adds dashes to a UUID if not done alrea
 ```js
 const log = console.log;
 
-log(Hypixel.fixUUID("eea2d4fda8b8413b9439f06faaf7e109")) // eea2d4fd-a8b8-413b-9439-f06faaf7e109
+log(Hypixel.fixUUID("eea2d4fda8b8413b9439f06faaf7e109")); // eea2d4fd-a8b8-413b-9439-f06faaf7e109
 ```
 
 #### Get Method of Converting to Name or UUID:
@@ -304,7 +319,7 @@ This will respond with either `uuid` or `name`.
 ```js
 const log = console.log;
 
-log(Hypixel.getMethod("eea2d4fda8b8413b9439f06faaf7e109")) // uuid
-log(Hypixel.getMethod("eea2d4fd-a8b8-413b-9439-f06faaf7e109")) // uuid
-log(Hypixel.getMethod("caykie")) // name
+log(Hypixel.getMethod("eea2d4fda8b8413b9439f06faaf7e109")); // uuid
+log(Hypixel.getMethod("eea2d4fd-a8b8-413b-9439-f06faaf7e109")); // uuid
+log(Hypixel.getMethod("caykie")); // name
 ```

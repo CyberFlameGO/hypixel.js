@@ -1,5 +1,6 @@
-const mc = require('minecraft-player');
+const phin = require('phin');
 const getMethod = require('../methods/getMethod');
+const { Support, MojangAPI } = require('../../constants.json');
 
 /**
 * Converts a player's username or UUID to the opposite or what is specified.
@@ -7,7 +8,7 @@ const getMethod = require('../methods/getMethod');
 * @param {string} [Convert] - Provide either "username". or "uuid" to convert to.
 */
 
-module.exports = async(User, Convert) => {
+module.exports = async(User, Convert) => new Promise(async (resolve) => {
 
     if (!User)
         throw Error('You must provide a user in this method.');
@@ -21,15 +22,19 @@ module.exports = async(User, Convert) => {
                 break;
         }
     }
-    else if(Convert !== "uuid" && Convert !== "name" && Convert !== "username")
+    else if (Convert !== "uuid" && Convert !== "name" && Convert !== "username")
         throw Error('You must specify either UUID or Username.');
 
     if (Convert === "name")
         Convert = "username";
 
-    const data = await mc(User).catch(() => {
-        throw Error("That player doesn't exist or another error occurred.");
+    const Request = await phin({
+        url: MojangAPI + User,
+        parse: 'json'
+    }).catch(() => {
+        throw Error("An error occurred while trying to get data." + Support);
     });
+    const Response = await Request.body[Convert];
+    return resolve(Response);
 
-    return data[Convert];
-}
+});

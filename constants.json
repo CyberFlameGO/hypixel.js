@@ -1,4 +1,5 @@
 {
     "Support": "\nIf you need additional support, join discord.gg/NeqVuSy.",
-    "API": "https://api.hypixel.net"
+    "API": "https://api.hypixel.net",
+    "MojangAPI": "https://api.ashcon.app/mojang/v2/user/"
 }

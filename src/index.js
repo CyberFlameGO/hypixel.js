@@ -10,9 +10,9 @@ const convertUser = require('./methods/convertUser');
 class Client {
 
     /**
-    * Creates a new Hypixel Client instance.
-    * @param {string} key - Hypixel API key obtained from Hypixel (mc.hypixel.net).
-    */
+     * Creates a new Hypixel Client instance.
+     * @param key — You must provide a key to use.
+     */
 
     constructor(key) {
         if (!key)
@@ -22,11 +22,27 @@ class Client {
     
     /**
     * Gets the data of a player with no method required.
-    * @param {string} user - Either a username or UUID with or without dashes.
-    * @param {string} [method] - Optional field for either Name or UUID.
+    * @param {string} user - Either a username or UUID with or without dashes (UUID faster).
     */
 
-    async getPlayer(user, method) {
+    async getPlayer(user) {
+        if (!user)
+            throw new Error('You must provide a Username or UUID (UUID faster).' + Support);
+        if (getMethod(user) === "uuid" && !user.indexOf("-") > -1)
+            user = fixUUID(user);
+        else if (getMethod(user) === "name") {
+            user = await convertUser(user, "uuid");
+        }
+        return await requestData("player", this.key, "uuid", user);
+    };
+
+    /**
+     * Depreciated getPlayer that will get limited by Hypixel using username.
+     * @param {string} user - Either a username or UUID with or without dashes (username will get limited).
+     * @param {string} [method] - Optional field for either Name or UUID.
+     */
+
+    async legacyGetPlayer(user, method) {
         if (!user)
             throw new Error('You must provide a Username or UUID.' + Support);
         if (method) {
@@ -39,12 +55,7 @@ class Client {
         else method = getMethod(user);
         if (method === "uuid" && !user.indexOf("-") > -1)
             user = fixUUID(user);
-            
-        const player = await requestData("player", this.key, method, user);
-        return {
-            success: player.success,
-            player: player.player
-        }
+        return await requestData("player", this.key, method, user);
     };
 
     /**
@@ -84,11 +95,7 @@ class Client {
         if(method === "player" && getMethod(guild) !== "uuid") {
             guild = await convertUser(guild, "uuid");
         }
-        const guildReturn = await requestData("guild", this.key, method, guild);
-        return {
-            success: guildReturn.success,
-            guild: guildReturn.guild
-        }
+        return await requestData("guild", this.key, method, guild);
     };
 
     /**
@@ -108,11 +115,7 @@ class Client {
         if(method === "uuid" && getMethod(player) !== "uuid") {
             player = await convertUser(player, "uuid");
         }
-        const SBReturn = await requestData("skyblock/auction", this.key, method, player);
-        return {
-            success: SBReturn.success,
-            auctions: SBReturn.auctions
-        }
+        return await requestData("skyblock/auction", this.key, method, player);
     };
 
     /**
@@ -125,12 +128,7 @@ class Client {
             throw new Error('You must provide a Username or UUID.' + Support);
         if(getMethod(user) !== "uuid")
             user = await convertUser(user, "uuid");
-        const friends = await requestData("friends", this.key, "uuid", user);
-        return {
-            success: friends.success,
-            uuid: friends.uuid,
-            records: friends.records
-        }
+        return await requestData("friends", this.key, "uuid", user);
     };
 
     /**
@@ -143,12 +141,7 @@ class Client {
             throw new Error('You must provide a Username or UUID.' + Support);
         if(getMethod(user) !== "uuid")
             user = await convertUser(user, "uuid");
-        const recentGames = await requestData("recentgames", this.key, "uuid", user);
-        return {
-            success: recentGames.success,
-            uuid: recentGames.uuid,
-            games: recentGames.games
-        }
+        return await requestData("recentgames", this.key, "uuid", user);
     };
 
     /**
@@ -161,21 +154,12 @@ class Client {
             throw new Error('You must provide a Username or UUID.' + Support);
         if(getMethod(user) !== "uuid")
             user = await convertUser(user, "uuid");
-        const status = await requestData("status", this.key, "uuid", user);
-        return {
-            success: status.success,
-            uuid: status.uuid,
-            session: {
-                online: status.session.online,
-                gameType: status.session.gameType,
-                mode: status.session.mode
-            }
-        }
+        return await requestData("status", this.key, "uuid", user);
     };
 
     /**
      * Find all of the active auctions on SkyBlock.
-     * @param {number} page - Number of the page in the list of active auctions.
+     * @param {number} [page] - Number of the page in the list of active auctions.
      */
 
     async getActiveSkyBlockAuctions(page) {
