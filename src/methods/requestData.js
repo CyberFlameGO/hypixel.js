@@ -1,7 +1,7 @@
 const phin = require('phin')
 const { Support, API } = require('../../constants.json');
 
-module.exports = (Endpoint, Key, Type, Data) => new Promise(async (resolve) => {
+module.exports = (Endpoint, Key, Type, Data) => new Promise(async (resolve, reject) => {
 
     if (!Endpoint)
         throw Error("You must provide a valid API endpoint for your request." + Support);
@@ -23,7 +23,7 @@ module.exports = (Endpoint, Key, Type, Data) => new Promise(async (resolve) => {
             url: `${API}/${Endpoint}?key=${Key}`,
             parse: 'json'
         }).catch(() => {
-            throw Error("An error occurred while trying to get data." + Support);
+            reject("An error occurred while trying to get data." + Support);
         });
         const Response = await Request.body;
         return resolve(Response);
