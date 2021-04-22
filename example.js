@@ -1,5 +1,7 @@
 const Hypixel = require('./src/index');
-const client = new Hypixel.Client("API");
+const client = new Hypixel.Client("");
 
-client.getPlayer('caykie')
-    .then(console.log);
+(async () => {
+    const data = await client.getStatus('cactive');
+    console.log(data);
+})();

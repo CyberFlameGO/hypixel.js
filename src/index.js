@@ -15,7 +15,7 @@ class Client {
      */
 
     constructor(key) {
-        if (!key)
+        if (!key || !isNaN(key))
             throw new Error('You must provide a Hypixel API key.' + Support);
         this.key = key;
     }
@@ -31,7 +31,7 @@ class Client {
         if (getMethod(user) === "uuid" && !user.indexOf("-") > -1)
             user = fixUUID(user);
         else if (getMethod(user) === "name") {
-            user = await convertUser(user, "uuid");
+            user = await convertUser(user, this.cache, "uuid");
         }
         return await requestData("player", this.key, "uuid", user);
     };
@@ -73,7 +73,7 @@ class Client {
         if (method !== "profile" && method !== "uuid")
             throw new Error('You must provide either \'profile\' or \`uuid\` as a method.' + Support);
         if(method === "player" && getMethod(profile) !== "uuid") {
-            method = await convertUser(profile, "uuid");
+            method = await convertUser(profile, this.cache, "uuid");
         }
         return await requestData("player", this.key, method, profile);
     };
@@ -93,7 +93,7 @@ class Client {
             throw new Error('You must provide a valid method of \'id\', \'player\' or \'name\'.' + Support);
         method = method.toLowerCase();
         if(method === "player" && getMethod(guild) !== "uuid") {
-            guild = await convertUser(guild, "uuid");
+            guild = await convertUser(guild, this.cache, "uuid");
         }
         return await requestData("guild", this.key, method, guild);
     };
@@ -113,7 +113,7 @@ class Client {
             throw new Error('You must provide a valid method of \'uuid\', \'player\' or \'profile\'.' + Support);
         method = method.toLowerCase();
         if(method === "uuid" && getMethod(player) !== "uuid") {
-            player = await convertUser(player, "uuid");
+            player = await convertUser(player, this.cache, "uuid");
         }
         return await requestData("skyblock/auction", this.key, method, player);
     };
@@ -127,7 +127,7 @@ class Client {
         if (!user)
             throw new Error('You must provide a Username or UUID.' + Support);
         if(getMethod(user) !== "uuid")
-            user = await convertUser(user, "uuid");
+            user = await convertUser(user, this.cache, "uuid");
         return await requestData("friends", this.key, "uuid", user);
     };
 
@@ -140,7 +140,7 @@ class Client {
         if (!user)
             throw new Error('You must provide a Username or UUID.' + Support);
         if(getMethod(user) !== "uuid")
-            user = await convertUser(user, "uuid");
+            user = await convertUser(user, this.cache, "uuid");
         return await requestData("recentgames", this.key, "uuid", user);
     };
 
@@ -153,7 +153,7 @@ class Client {
         if (!user)
             throw new Error('You must provide a Username or UUID.' + Support);
         if(getMethod(user) !== "uuid")
-            user = await convertUser(user, "uuid");
+            user = await convertUser(user, this.cache, "uuid");
         return await requestData("status", this.key, "uuid", user);
     };
 
@@ -226,8 +226,5 @@ class Client {
 }
 
 module.exports = {
-    Client: Client,
-    getMethod: getMethod,
-    fixUUID: fixUUID,
-    convertUser: convertUser
+    Client, getMethod, fixUUID, convertUser
 }

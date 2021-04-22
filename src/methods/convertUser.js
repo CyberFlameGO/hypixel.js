@@ -8,12 +8,11 @@ const { Support, MojangAPI } = require('../../constants.json');
 * @param {string} [Convert] - Provide either "username". or "uuid" to convert to.
 */
 
-module.exports = async(User, Convert) => new Promise(async (resolve, reject) => {
-
+module.exports = async(User, Cache, Convert) => new Promise(async (resolve, reject) => {
     if (!User)
         throw Error('You must provide a user in this method.');
     else if (!Convert) {
-        switch(getMethod(User)) {
+        switch (getMethod(User)) {
             case "uuid":
                 Convert = "username";
                 break;
@@ -25,16 +24,15 @@ module.exports = async(User, Convert) => new Promise(async (resolve, reject) => 
     else if (Convert !== "uuid" && Convert !== "name" && Convert !== "username")
         throw Error('You must specify either UUID or Username.');
 
-    if (Convert === "name")
-        Convert = "username";
-
-    const Request = await phin({
-        url: MojangAPI + User,
-        parse: 'json'
-    }).catch(() => {
-        reject("An error occurred while trying to get data." + Support);
-    });
-    const Response = await Request.body[Convert];
-    return resolve(Response);
+    else {
+        const Request = await phin({
+            url: MojangAPI + User,
+            parse: 'json'
+        }).catch(() => {
+            reject("An error occurred while trying to get data." + Support);
+        });
+        const Response = await Request.body[Convert];
+        return resolve(Response);
+    }
 
 });
